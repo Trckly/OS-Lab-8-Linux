@@ -213,7 +213,7 @@ void MainWindow::on_ForceUpdateButton_clicked()
 
 bool MainWindow::OpenLogFile()
 {
-    dLogFile = open(FILEPATH, O_WRONLY | O_APPEND | O_CREAT, S_IWUSR | S_IRUSR);
+    dLogFile = open(FILEPATH, O_WRONLY | O_APPEND | O_CREAT, 0000777);
     if (dLogFile == -1) {
         QMessageBox::information(this, "Error", "Failed to open log file!");
         return false;
@@ -247,13 +247,13 @@ std::string MainWindow::GetDateTime()
 void MainWindow::on_AccessButton_clicked()
 {
     if (bDenyAccess) {
-        if (chmod(FILEPATH, 770) == -1) {
+        if (chmod(FILEPATH, 0000770) == -1) {
             QMessageBox::information(this, "Error", " Failed to set access mask!");
             return;
         }
         ui->AccessButton->setText("Allow Access");
     } else {
-        if (chmod(FILEPATH, 777) == -1) {
+        if (chmod(FILEPATH, 0000777) == -1) {
             QMessageBox::information(this, "Error", " Failed to set access mask!");
             return;
         }
